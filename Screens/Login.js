@@ -42,7 +42,7 @@ export default class LoginScreen extends React.Component{
                 />
 
                 <Button mode="contained"
-                    onPress={this.onLogin.bind(this)}
+                    onPress={()=>this.onLogin.bind(this)}
                 >Login</Button>
             </View>
         );

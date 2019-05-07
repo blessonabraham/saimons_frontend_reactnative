@@ -11,8 +11,11 @@ import Logout from "./Authentication/Logout";
 import HotDeals from "./Screens/HotDeals";
 import MyTADA from "./Screens/MyTADA";
 import NearBy from "./Screens/NearBy";
+import AddClient from "./Screens/AddClient";
 
 let apiURL = "https://saimons-y6o6lhzgsa-uc.a.run.app/";
+
+console.disableYellowBox = true;
 
 global.NetworkGet = (url) => {
     Snackbar.show({
@@ -182,8 +185,14 @@ const EmployeeStack = createDrawerNavigator({
                 drawerLabel: () => 'Logout',
             }
         }
+    },
+    AddClient: {
+        screen: AddClient, navigationOptions: ({navigation}) => {
+            return {
+                drawerLabel: () => 'Add Client',
+            }
+        }
     }
-
 }, {initialRouteName: 'Home', navigationOptions: navigationOptionsHeader,});
 
 

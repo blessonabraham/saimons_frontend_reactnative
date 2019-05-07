@@ -9,8 +9,10 @@ export default class ClientListItem extends React.PureComponent {
         return (
                 <Card style={{ margin: 10}} elevation={5}>
                     <Card.Content>
-                        <Title>{this.props.response.name}</Title>
-                        <Paragraph>{this.props.response.address}</Paragraph>
+                        <Title>Name: {this.props.response.name}</Title>
+                        <Paragraph>Address: {this.props.response.address}</Paragraph>
+                        <Paragraph>District: {this.props.response.district}</Paragraph>
+                        <Paragraph>Contact No: {this.props.response.mobile}</Paragraph>
                     </Card.Content>
                 </Card>
         );
