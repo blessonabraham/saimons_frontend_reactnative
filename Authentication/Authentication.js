@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
-    StyleSheet,
-    View,
-} from 'react-native';
+import {ActivityIndicator, Colors, Text} from 'react-native-paper';
+import {View} from "react-native";
+
 
 export default class Authentication extends React.Component {
     constructor(props) {
@@ -25,10 +21,10 @@ export default class Authentication extends React.Component {
 
     render() {
         return (
-            <View>
-                <ActivityIndicator />
-                <StatusBar barStyle="default" />
+            <View style={{justifyContent: 'center', flex: 1}}>
+                <ActivityIndicator size='large' animating={true} color={Colors.red800} />
             </View>
+
         );
     }
 }

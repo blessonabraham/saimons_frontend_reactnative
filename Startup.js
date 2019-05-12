@@ -1,17 +1,19 @@
 import {createStackNavigator, createAppContainer, createDrawerNavigator,} from 'react-navigation';
 import HomeScreen from "./Screens/Home";
-import LoginScreen from "./Screens/Login";
+import LoginScreen from "./Authentication/Login";
 import Snackbar from 'react-native-snackbar';
 import AsyncStorage from '@react-native-community/async-storage';
 import Authentication from "./Authentication/Authentication";
 import React from "react";
 import {Button} from "react-native-paper";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Logout from "./Authentication/Logout";
 import HotDeals from "./Screens/HotDeals";
 import MyTADA from "./Screens/MyTADA";
 import NearBy from "./Screens/NearBy";
 import AddClient from "./Screens/AddClient";
+import ClientInDetail from "./Components/ClientInDetail";
+import Register from "./Authentication/Register";
 
 let apiURL = "https://saimons-y6o6lhzgsa-uc.a.run.app/";
 
@@ -43,6 +45,25 @@ global.NetworkGet = (url) => {
                 } else {
                     resolve(responseJson);
                 }
+            })
+            .catch((error) => {
+                Snackbar.dismiss();
+                Snackbar.show({
+                    title: error.toString(),
+                    duration: Snackbar.LENGTH_LONG,
+                });
+            });
+    });
+};
+
+global.NetworkGetSilent = (url) => {
+    return new Promise(async function (resolve, reject) {
+        fetch(url)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                Snackbar.dismiss();
+                console.log(JSON.stringify(responseJson));
+                resolve(responseJson);
             })
             .catch((error) => {
                 Snackbar.dismiss();
@@ -95,6 +116,19 @@ global.NetworkPost = (url, data) => {
     });
 };
 
+global.GetLocationAddress = () => {
+    return new Promise(async function (resolve, reject) {
+        navigator.geolocation.getCurrentPosition(
+            async position => {
+                let response = await NetworkGetSilent(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyCL8N61HDLyUN_-bUqW0Qd3Dg8_QTa1Yws`);
+                resolve(response.plus_code.compound_code);
+            },
+            error => console.log(error.message),
+            {enableHighAccuracy: false, timeout: 20000,}
+        );
+    });
+};
+
 global.StorageGet = async (key) => {
     try {
         const value = await AsyncStorage.getItem(key);
@@ -123,19 +157,21 @@ global.StoragePut = async (key, value) => {
 };
 
 const navigationOptionsHeader = ({navigation}) => {
+    const { routeName } = navigation.state.routes[navigation.state.index];
+
     return {
         headerLeft: (
-            <Button mode='text' onPress={() => navigation.toggleDrawer()}><Icon name="bars" fontSize="40"
+            <Button mode='text' onPress={() => navigation.toggleDrawer()}><Icon name="menu" size={25}
                                                                                 color="white"/></Button>
         ),
         headerStyle: {
-            backgroundColor: '#5483f4',
+            backgroundColor: '#6f008f',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
             color: 'white',
         },
-        title: 'Saimons Hydro Solutions'
+        title: routeName
     };
 };
 
@@ -147,6 +183,13 @@ const AuthStack = createDrawerNavigator({
             }
         },
     },
+    Register: {
+        screen: Register, navigationOptions: ({navigation}) => {
+            return {
+                drawerLabel: () => 'Register',
+            }
+        },
+    }
 
 }, {initialRouteName: 'Login', navigationOptions: navigationOptionsHeader,});
 
@@ -155,6 +198,7 @@ const EmployeeStack = createDrawerNavigator({
         screen: HomeScreen, navigationOptions: ({navigation}) => {
             return {
                 drawerLabel: () => 'Home',
+                drawerIcon: () => <Icon name="home" size={25} color="grey"/>
             }
         }
     },
@@ -162,13 +206,16 @@ const EmployeeStack = createDrawerNavigator({
         screen: HotDeals, navigationOptions: ({navigation}) => {
             return {
                 drawerLabel: () => 'Hot Deals',
+                drawerIcon: () => <Icon name="fire" size={25} color="grey"/>
             }
         }
     },
+
     MyTADA: {
         screen: MyTADA, navigationOptions: ({navigation}) => {
             return {
                 drawerLabel: () => 'My TA/DA',
+                drawerIcon: () => <Icon name="account-box" size={25} color="grey"/>
             }
         }
     },
@@ -176,6 +223,7 @@ const EmployeeStack = createDrawerNavigator({
         screen: NearBy, navigationOptions: ({navigation}) => {
             return {
                 drawerLabel: () => 'Near By Clients',
+                drawerIcon: () => <Icon name="map" size={25} color="grey"/>
             }
         }
     },
@@ -183,13 +231,21 @@ const EmployeeStack = createDrawerNavigator({
         screen: Logout, navigationOptions: ({navigation}) => {
             return {
                 drawerLabel: () => 'Logout',
+                drawerIcon: () => <Icon name="power" size={25} color="grey"/>
             }
         }
     },
     AddClient: {
         screen: AddClient, navigationOptions: ({navigation}) => {
             return {
-                drawerLabel: () => 'Add Client',
+                drawerLabel: () => null,
+            }
+        }
+    },
+    ClientInDetail: {
+        screen: ClientInDetail, navigationOptions: ({navigation}) => {
+            return {
+                drawerLabel: () => null,
             }
         }
     }

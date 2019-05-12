@@ -1,0 +1,8 @@
+module.exports = {
+    IndianStates : ["Select State","andaman & nicobar", "andhra pradesh", "arunachal pradesh", "assam", "bihar", "chandigarh", "chhattisgarh", "dadra & nagar haveli", "daman & diu", "delhi", "goa", "gujarat", "haryana", "himachal pradesh", "jammu & kashmir", "jharkhand", "karnataka", "kerala", "lakshadweep", "madhya pradesh", "maharashtra", "manipur", "meghalaya", "mizoram", "nagaland", "orissa", "pondicherry", "punjab", "rajasthan", "sikkim", "tamil nadu", "tripura", "uttar pradesh", "uttaranchal", "west bengal"],
+    IndianDistricts: ["Select District","adoor", "alappuzha", "attingal", "chalakudy", "changanassery", "cherthala", "chittur-thathamangalam", "guruvayoor", "kanhangad", "kannur", "kasaragod", "kayamkulam", "kochi", "kodungallur", "kollam", "kottayam", "kozhikode", "kunnamkulam", "malappuram", "mattannur", "mavelikkara", "mavoor", "muvattupuzha", "nedumangad", "neyyattinkara", "nilambur", "ottappalam", "palai", "palakkad", "panamattom", "panniyannur", "pappinisseri", "paravoor", "pathanamthitta", "peringathur", "perinthalmanna", "perumbavoor", "ponnani", "punalur", "puthuppally", "koyilandy", "shoranur", "taliparamba", "thiruvalla", "thiruvananthapuram", "thodupuzha", "thrissur", "tirur", "vaikom", "varkala", "vatakara"],
+    Sales_Filter_Array: ['Select Sales Filter','margin_money_received', 'dd_received', 'advance_received', 'finance_tie_up', 'negotiation_stage', 'requirement_identified', 'breaker_delivered'],
+    Breaker_Array: ['Select Breaker','400', '450', '650', '750', '1000', '1400'],
+    Deal_Array: ['Select Deal','hot','cold'],
+
+};
