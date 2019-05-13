@@ -7,6 +7,7 @@ import Startup from './Startup';
 import {name as appName} from './app.json';
 import React from "react";
 import { Provider as PaperProvider } from 'react-native-paper';
+import codePush from "react-native-code-push";
 
 export default function Main() {
     return (
@@ -16,4 +17,6 @@ export default function Main() {
     );
 }
 
-AppRegistry.registerComponent(appName, () => Main);
+let MyApp = codePush(Main);
+
+AppRegistry.registerComponent(appName, () => MyApp);

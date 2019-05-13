@@ -1,3 +1,5 @@
 <resources>
+	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">lOUN468u4_trzLA_jXcW818eYlWNBkBLCK82N</string>
     <string name="app_name">Saimons</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
 </resources>
