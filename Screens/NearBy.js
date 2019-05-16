@@ -2,8 +2,8 @@ import React from 'react';
 import {View, FlatList, ScrollView} from 'react-native';
 import ClientListItem from '../Components/ClientListItem';
 import {Grid, Row} from "react-native-easy-grid";
-import BottomMenu from "../Components/BottomMenu";
 import {Text} from "react-native-paper";
+import BottomMenuCommon from "../Components/BottomMenuCommon";
 
 
 export default class NearBy extends React.Component {
@@ -49,7 +49,7 @@ export default class NearBy extends React.Component {
                     </ScrollView>
                 </Row>
                 <Row size={15}>
-                    <BottomMenu LoadData={()=>this.SendRequest()} navigation={this.props.navigation} />
+                    <BottomMenuCommon LoadData={()=>this.SendRequest()} navigation={this.props.navigation} />
                 </Row>
             </Grid>
         );

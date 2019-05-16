@@ -12,8 +12,9 @@ import HotDeals from "./Screens/HotDeals";
 import MyTADA from "./Screens/MyTADA";
 import NearBy from "./Screens/NearBy";
 import AddClient from "./Screens/AddClient";
-import ClientInDetail from "./Components/ClientInDetail";
+import ClientInDetail from "./Screens/ClientInDetail";
 import Register from "./Authentication/Register";
+import EditClient from "./Screens/EditClient";
 
 let apiURL = "https://saimons-y6o6lhzgsa-uc.a.run.app/";
 
@@ -129,6 +130,15 @@ global.GetLocationAddress = () => {
     });
 };
 
+global.GetLocationAddressByCords = (lat, long) => {
+    return new Promise(async function (resolve, reject) {
+        console.log("one");
+        let response = await NetworkGetSilent(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyCL8N61HDLyUN_-bUqW0Qd3Dg8_QTa1Yws`);
+        console.log(response);
+        resolve(response.plus_code.compound_code);
+    });
+};
+
 global.StorageGet = async (key) => {
     try {
         const value = await AsyncStorage.getItem(key);
@@ -157,7 +167,7 @@ global.StoragePut = async (key, value) => {
 };
 
 const navigationOptionsHeader = ({navigation}) => {
-    const { routeName } = navigation.state.routes[navigation.state.index];
+    const {routeName} = navigation.state.routes[navigation.state.index];
 
     return {
         headerLeft: (
@@ -242,26 +252,35 @@ const EmployeeStack = createDrawerNavigator({
             }
         }
     },
-    ClientInDetail: {
-        screen: ClientInDetail, navigationOptions: ({navigation}) => {
-            return {
-                drawerLabel: () => null,
-            }
-        }
-    }
 }, {initialRouteName: 'Home', navigationOptions: navigationOptionsHeader,});
-
-
-// const AppStack = createStackNavigator({RootStack: {screen: RootStack}});
 
 const AppContainer = createAppContainer(createStackNavigator(
     {
         AuthLoading: Authentication,
         Employee: EmployeeStack,
         Login: AuthStack,
+        ClientInDetail: {
+            screen: ClientInDetail, navigationOptions: ({navigation}) => {
+                return {
+                    drawerLabel: () => null,
+                }
+            }
+        },
+        EditClient: {
+            screen: EditClient, navigationOptions: ({navigation}) => {
+                return {
+                    drawerLabel: () => null,
+                }
+            }
+        }
     },
     {
-        initialRouteName: 'AuthLoading'
+        initialRouteName: 'AuthLoading',defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#6f008f',
+            },
+            headerTintColor: '#ffffff'
+        }
     }));
 
 export default class Startup extends React.Component {

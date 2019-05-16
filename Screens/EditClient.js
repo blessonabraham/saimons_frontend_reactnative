@@ -1,21 +1,27 @@
 import React, {Component} from 'react';
 import {Text, TextInput, Button, Divider, Avatar} from 'react-native-paper';
-import {View, ScrollView, Picker} from 'react-native';
+import {View, ScrollView, Picker, BackHandler} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import DatePicker from 'react-native-datepicker'
 import {Col, Grid, Row} from "react-native-easy-grid";
 
 let {IndianStates, IndianDistricts, Sales_Filter_Array, Breaker_Array, Deal_Array} = require('../Globals/global');
 
-
-export default class AddClient extends React.Component {
+export default class EditClient extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = {};
-        this.getLocation();
+        let {
+            _id, name, mobile, state, district, address, geolocation,
+            staff_name, staff_contact_number, email_id, base_machine,
+            breaker, deal, followup_date, comment, sales_filter
+        } = ObjectValuesToString(this.props.navigation.state.params.response);
+        this.state = {
+            _id, name, mobile, state, district, address, geolocation: JSON.parse("[" + geolocation + "]"),
+            staff_name, staff_contact_number, email_id, base_machine,
+            breaker, deal, followup_date, comment, sales_filter
+        };
     }
-
 
     getLocation() {
         navigator.geolocation.getCurrentPosition(
@@ -29,9 +35,8 @@ export default class AddClient extends React.Component {
         );
     }
 
-
     async onSubmit() {
-        let response = await NetworkPost('/client/add_new', this.state);
+        let response = await NetworkPost('/client/update_one', this.state);
         if (response.status === 'success') {
             const navigateAction = NavigationActions.navigate({
                 routeName: 'Employee', params: {}, action: NavigationActions.navigate({routeName: 'Home'}),
@@ -64,7 +69,7 @@ export default class AddClient extends React.Component {
                     <Divider/>
 
                     <Picker
-                        selectedValue={this.state.state ? this.state.state : ''}
+                        selectedValue={this.state.state ? Number(this.state.state) : ''}
                         onValueChange={(itemValue, itemPosition) =>
                             this.setState({state: itemValue})
                         }>
@@ -77,7 +82,7 @@ export default class AddClient extends React.Component {
                     <Divider/>
 
                     <Picker
-                        selectedValue={this.state.district ? this.state.district : ''}
+                        selectedValue={this.state.district ? Number(this.state.district) : ''}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({district: itemValue})
                         }>
@@ -150,7 +155,7 @@ export default class AddClient extends React.Component {
                     <Divider/>
                     <Divider/>
                     <Picker
-                        selectedValue={this.state.breaker ? this.state.breaker : ''}
+                        selectedValue={this.state.breaker}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({breaker: itemValue})
                         }>
@@ -161,7 +166,7 @@ export default class AddClient extends React.Component {
                     <Divider/>
                     <Divider/>
                     <Picker
-                        selectedValue={this.state.deal ? this.state.deal : ''}
+                        selectedValue={this.state.deal}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({deal: itemValue})
                         }>
@@ -197,7 +202,7 @@ export default class AddClient extends React.Component {
                     <Divider/>
                     <Divider/>
                     <Picker
-                        selectedValue={this.state.sales_filter ? this.state.sales_filter : ''}
+                        selectedValue={this.state.sales_filter}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({sales_filter: itemValue})
                         }>
@@ -207,10 +212,21 @@ export default class AddClient extends React.Component {
                     </Picker>
                     <Divider/>
                     <Divider/>
-                    <Button mode="contained" onPress={() => this.onSubmit()}>Add Contact</Button>
+                    <Button mode="contained" onPress={() => this.onSubmit()}>Submit Update</Button>
                 </View>
-
             </ScrollView>
         );
     }
+}
+
+function ObjectValuesToString(obj) {
+
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key) && obj[key] != null)
+        {
+            obj[key] =  obj[key].toString();
+        }
+    }
+    console.log(obj);
+    return obj;
 }

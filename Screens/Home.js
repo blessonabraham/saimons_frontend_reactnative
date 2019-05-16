@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, FlatList, Container, ScrollView} from 'react-native';
+import {View, FlatList, Container, ScrollView, BackHandler} from 'react-native';
 import ClientListItem from '../Components/ClientListItem';
 import {Col, Row, Grid} from "react-native-easy-grid";
-import BottomMenu from "../Components/BottomMenu";
+import BottomMenuHome from "../Components/BottomMenuHome";
 import {Text} from "react-native-paper";
 
 
@@ -15,11 +15,26 @@ export default class HomeScreen extends React.Component {
             CheckIn: false,
             NoData: false
         };
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }
 
     componentDidMount() {
         this.LoadData();
     }
+
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
 
     async LoadData() {
         let response = await NetworkGet('client/get_my_clients_list');
@@ -48,7 +63,7 @@ export default class HomeScreen extends React.Component {
                     </ScrollView>
                 </Row>
                 <Row size={15}>
-                    <BottomMenu LoadData={() => this.LoadData()} navigation={this.props.navigation}/>
+                    <BottomMenuHome LoadData={() => this.LoadData()} navigation={this.props.navigation}/>
                 </Row>
             </Grid>
         );

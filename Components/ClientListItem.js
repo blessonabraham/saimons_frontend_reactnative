@@ -11,9 +11,12 @@ export default class ClientListItem extends React.PureComponent {
             <Card onPress={() => {
                 const navigateAction = NavigationActions.navigate({
                     routeName: 'Employee',
-                    action: NavigationActions.navigate({routeName: 'ClientInDetail',params: {response: this.props.response}}),
+                    action: NavigationActions.navigate({
+                        routeName: 'ClientInDetail',
+                        params: {response: this.props.response}
+                    }),
                 });
-                this.props.navigation.dispatch(navigateAction);
+                this.props.navigation.navigate('ClientInDetail',{response: this.props.response});
             }} style={{
                 borderRadius: 4,
                 borderWidth: 0.5,
@@ -30,7 +33,7 @@ export default class ClientListItem extends React.PureComponent {
                         <Col style={{
                             justifyContent: 'center',
                             alignItems: 'center'
-                        }}  size={10}>
+                        }} size={10}>
                             <Avatar.Icon size={40} icon="keyboard-arrow-right"/>
                         </Col>
                     </Grid>
