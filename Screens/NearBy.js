@@ -35,12 +35,12 @@ export default class NearBy extends React.Component {
         return (
             <Grid>
                 <Row size={80}>
+                    <ScrollView style={{flex: 1}}>
                     {this.state.NoData &&
                     <View style={{marginTop: 50, justifyContent: 'center', flex: 1}}>
                         <Text style={{textAlign: 'center'}}>No Contacts</Text>
                     </View>
                     }
-                    <ScrollView style={{flex: 1}}>
                         <FlatList
                             data={this.state.response}
                             renderItem={({item}) => <ClientListItem response={item} navigation={this.props.navigation}/>}

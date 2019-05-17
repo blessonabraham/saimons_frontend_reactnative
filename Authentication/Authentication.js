@@ -1,12 +1,13 @@
 import React from 'react';
 import {ActivityIndicator, Colors, Text} from 'react-native-paper';
-import {View} from "react-native";
+import {Image, View} from "react-native";
+import {version as app_version}  from '../package.json';
 
 
 export default class Authentication extends React.Component {
     constructor(props) {
         super(props);
-        this.CheckLogin();
+        setTimeout(()=>this.CheckLogin(), 1000);
     }
 
     async CheckLogin() {
@@ -21,10 +22,13 @@ export default class Authentication extends React.Component {
 
     render() {
         return (
-            <View style={{justifyContent: 'center', flex: 1}}>
-                <ActivityIndicator size='large' animating={true} color={Colors.red800} />
-            </View>
-
+                <View style={{marginTop: 0, justifyContent: 'center', alignItems: 'center',flex: 1}}>
+                    <Image style={{width: 150, height: 80, marginTop: 20}} source={require('../Assists/saimons.jpeg')}/>
+                    <View style={{margin: 10,}} />
+                    <Text style={{color: 'grey'}}>v{app_version}</Text>
+                    <View style={{margin: 10,}} />
+                    <ActivityIndicator size='small' animating={true} color={Colors.red800} />
+                </View>
         );
     }
 }

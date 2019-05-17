@@ -74,6 +74,18 @@ export default class BottomMenuHome extends React.Component {
                         <Divider/>
                         <Text style={{fontSize: 10}}>Sync Data</Text>
                     </Col>
+                    <Col onPress={() => this.AttendancePut()} size={1} style={{
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        {this.state.AttdnStatus === "check_in" ? (
+                            <Button style={{margin: 10}} color="red" mode="contained">Check Out</Button>
+                        ) : (
+                            <Button style={{margin: 10}} color="green" mode="contained">Check In</Button>
+
+                        )
+                        }
+                    </Col>
                     <Col size={1} style={{
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -88,25 +100,6 @@ export default class BottomMenuHome extends React.Component {
                         <Avatar.Icon size={40} icon="person-add"/>
                         <Divider/>
                         <Text style={{fontSize: 10}}>Add Client</Text>
-                    </Col>
-                    <Col onPress={() => this.AttendancePut()} size={1} style={{
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        {this.state.AttdnStatus === "check_in" ? (
-                            <View>
-                                <Avatar.Icon size={40} icon="format-indent-decrease"/>
-                                <Divider/>
-                                <Text style={{fontSize: 10}}>CheckOut</Text>
-                            </View>
-                        ) : (
-                            <View>
-                                <Avatar.Icon size={40} icon="format-indent-increase"/>
-                                <Divider/>
-                                <Text style={{fontSize: 10}}>CheckIn</Text>
-                            </View>
-                        )
-                        }
                     </Col>
                 </Row>
             </Grid>

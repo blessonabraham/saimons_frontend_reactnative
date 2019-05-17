@@ -256,7 +256,12 @@ const EmployeeStack = createDrawerNavigator({
 
 const AppContainer = createAppContainer(createStackNavigator(
     {
-        AuthLoading: Authentication,
+        AuthLoading: {
+            screen: Authentication,
+            navigationOptions: {
+                header: null,
+            }
+        },
         Employee: EmployeeStack,
         Login: AuthStack,
         ClientInDetail: {
@@ -275,7 +280,7 @@ const AppContainer = createAppContainer(createStackNavigator(
         }
     },
     {
-        initialRouteName: 'AuthLoading',defaultNavigationOptions: {
+        initialRouteName: 'AuthLoading', defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#6f008f',
             },
