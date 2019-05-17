@@ -41,6 +41,8 @@ export default class HomeScreen extends React.Component {
         this.setState({response: response.content});
         if (response.content.length === 0) {
             this.setState({NoData: true});
+        } else {
+            this.setState({NoData: false});
         }
     }
 

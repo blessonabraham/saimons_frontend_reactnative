@@ -79,9 +79,9 @@ export default class BottomMenuHome extends React.Component {
                         alignItems: 'center'
                     }}>
                         {this.state.AttdnStatus === "check_in" ? (
-                            <Button style={{margin: 10}} color="red" mode="contained">Check Out</Button>
+                            <Button style={{margin: 5}} color="red" mode="contained"><Text style={{color: "white"}}>Check Out</Text></Button>
                         ) : (
-                            <Button style={{margin: 10}} color="green" mode="contained">Check In</Button>
+                            <Button style={{margin: 5}} color="green" mode="contained"><Text style={{color: "white"}}>Check In</Text></Button>
 
                         )
                         }
